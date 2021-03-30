@@ -1,0 +1,54 @@
+name: "Draw.io Export Action"
+description: "GitHub Action To Export Draw.io Files"
+author: "rlespinasse"
+inputs:
+  path:
+    description: "Path to the drawio files to export"
+    required: false
+    default: "."
+  format:
+    description: "Exported format [possible values: adoc, jpg, pdf, png, svg, vsdx, xml]"
+    required: false
+    default: "pdf"
+  output:
+    description: "Exported folder name"
+    required: false
+    default: "export"
+  remove-page-suffix:
+    description: "Remove page suffix when possible (in case of single page file)"
+    required: false
+  border:
+    description: "Sets the border width around the diagram"
+    required: false
+    default: "0"
+  scale:
+    description: "Scales the diagram size"
+    required: false
+  width:
+    description: "Fits the generated image/pdf into the specified width, preserves aspect ratio"
+    required: false
+  height:
+    description: "Fits the generated image/pdf into the specified height, preserves aspect ratio"
+    required: false
+  crop:
+    description: "crops PDF to diagram size"
+    required: false
+  embed-diagram:
+    description: "Includes a copy of the diagram for PNG or PDF"
+    required: false
+  transparent:
+    description: "Set transparent background for PNG"
+    required: false
+  quality:
+    description: "Output image quality for JPEG"
+    required: false
+    default: "90"
+  uncompressed:
+    description: "Uncompressed XML output"
+    required: false
+runs:
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "layers"
+  color: "purple"
