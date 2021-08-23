@@ -27,6 +27,10 @@ if [ "${INPUT_CROP}" == "true" ]; then
   args_array+=("--crop")
 fi
 
+if [ "${INPUT_ON-CHANGES}" == "true" ]; then
+  args_array+=("--on-changes")
+fi
+
 if [ -n "${INPUT_SCALE}" ]; then
   args_array+=("--scale" "${INPUT_SCALE}")
 fi
