@@ -14,15 +14,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: make build
       - run: make test
-      - uses: cycjimmy/semantic-release-action@v2
+      - name: Release this GitHub Action
+        uses: rlespinasse/release-that@v1.x
         with:
-          semantic_version: 17.4.0
-          branches: |
-            [
-              'v1.x'
-            ]
-          extra_plugins: |
-            @semantic-release/changelog@5.0.1
-            @semantic-release/git@9.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+          without-prefix: true
