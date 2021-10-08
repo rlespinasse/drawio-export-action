@@ -9,11 +9,11 @@
 }
 
 @test "with pdf format" {
-  docker_test 0 "pdf" -e INPUT_PATH=nominal -e INPUT_FORMAT=pdf -e INPUT_CROP=true -e INPUT_EMBED-DIAGRAM=true
+  docker_test 0 "pdf" -e INPUT_PATH=nominal -e INPUT_FORMAT=pdf -e INPUT_CROP=true -e INPUT_EMBED_DIAGRAM=true
 }
 
 @test "with png format" {
-  docker_test 0 "png" -e INPUT_PATH=nominal -e INPUT_FORMAT=png -e INPUT_TRANSPARENT=true -e INPUT_EMBED-DIAGRAM=true
+  docker_test 0 "png" -e INPUT_PATH=nominal -e INPUT_FORMAT=png -e INPUT_TRANSPARENT=true -e INPUT_EMBED_DIAGRAM=true
 }
 
 @test "with svg format" {
@@ -29,7 +29,7 @@
 }
 
 @test "with general options" {
-  docker_test 0 "pdf" -e INPUT_PATH=nominal -e INPUT_OUTPUT=test-output -e INPUT_REMOVE-PAGE-SUFFIX=true -e INPUT_BORDER=1 -e INPUT_SCALE=1 -e INPUT_HEIGHT=100 -e INPUT_WIDTH=100
+  docker_test 0 "pdf" -e INPUT_PATH=nominal -e INPUT_OUTPUT=test-output -e INPUT_REMOVE_PAGE_SUFFIX=true -e INPUT_BORDER=1 -e INPUT_SCALE=1 -e INPUT_HEIGHT=100 -e INPUT_WIDTH=100
 }
 
 docker_test() {

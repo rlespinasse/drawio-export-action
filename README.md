@@ -23,7 +23,7 @@ Possible values: adoc, jpg, pdf, png, svg, vsdx, xml
 
 Exported folder name. Default `"export"`.
 
-### `remove-page-suffix`
+### `remove_page_suffix`
 
 Remove page suffix when possible (in case of single page file)
 
@@ -47,7 +47,7 @@ Fits the generated image/pdf into the specified height, preserves aspect ratio
 
 crops PDF to diagram size
 
-### `embed-diagram`
+### `embed_diagram`
 
 Includes a copy of the diagram for PNG or PDF
 

@@ -14,7 +14,7 @@ inputs:
     description: "Exported folder name"
     required: false
     default: "export"
-  remove-page-suffix:
+  remove_page_suffix:
     description: "Remove page suffix when possible (in case of single page file)"
     required: false
   border:
@@ -33,7 +33,7 @@ inputs:
   crop:
     description: "crops PDF to diagram size"
     required: false
-  embed-diagram:
+  embed_diagram:
     description: "Includes a copy of the diagram for PNG or PDF"
     required: false
   transparent:
