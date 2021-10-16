@@ -1,0 +1,44 @@
+name: drawio-export-action
+on: push
+jobs:
+  drawio-export-action-os-testing:
+    runs-on: ${{ matrix.os  }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          # Dockerfile actions are only supported on Linux
+          # - macos-latest
+          # - windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Testing without options
+        uses: ./
+      - name: Testing with options
+        uses: ./
+        with:
+          path: tests/data
+          format: adoc
+          output: "test-output"
+          remove-page-suffix: true
+          border: 1
+          scale: 1
+          width: 100
+          height: 100
+          crop: true
+          embed-diagram: true
+          transparent: true
+          quality: 95
+          uncompressed: true
+
+  drawio-export-action-release:
+    runs-on: ubuntu-latest
+    needs:
+      - drawio-export-action-os-testing
+    steps:
+      - uses: actions/checkout@v2
+      - name: Release this GitHub Action
+        uses: rlespinasse/release-that@v1.x
+        with:
+          without-prefix: true

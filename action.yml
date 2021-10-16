@@ -46,9 +46,15 @@ inputs:
   uncompressed:
     description: "Uncompressed XML output"
     required: false
-runs:
-  using: "docker"
-  image: "Dockerfile"
 branding:
   icon: "layers"
   color: "purple"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    # GitHub Action environment variables based on inputs don't convert '-' to another character
+    # And since bash don't like '-' in an env var name, we use '_' instead
+    # Using 'env' to pass the modified environment variables to the Dockerfile
+    INPUT_EMBED_DIAGRAM: ${{ inputs.embed-diagram }}
+    INPUT_REMOVE_PAGE_SUFFIX: ${{ inputs.remove-page-suffix }}
