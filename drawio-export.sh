@@ -7,11 +7,11 @@ args_array+=(
   "--quality" "${INPUT_QUALITY}"
 )
 
-if [ "${INPUT_EMBED-DIAGRAM}" == "true" ]; then
+if [ "${INPUT_EMBED_DIAGRAM}" == "true" ]; then
   args_array+=("--embed-diagram")
 fi
 
-if [ "${INPUT_REMOVE-PAGE-SUFFIX}" == "true" ]; then
+if [ "${INPUT_REMOVE_PAGE_SUFFIX}" == "true" ]; then
   args_array+=("--remove-page-suffix")
 fi
 
@@ -40,5 +40,7 @@ if [ -n "${INPUT_WIDTH}" ]; then
 fi
 
 args_array+=("${INPUT_PATH}")
+
+echo Options: "${args_array[@]}"
 
 /opt/drawio-exporter/runner-no-security-warnings.sh "${args_array[@]}"
