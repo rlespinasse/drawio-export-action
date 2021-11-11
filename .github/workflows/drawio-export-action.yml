@@ -1,7 +1,7 @@
 name: drawio-export-action
-on: push
+on: [push, pull_request]
 jobs:
-  drawio-export-action-os-testing:
+  os-testing-with-shallow-clone:
     runs-on: ${{ matrix.os  }}
     strategy:
       fail-fast: false
@@ -11,16 +11,42 @@ jobs:
           # Dockerfile actions are only supported on Linux
           # - macos-latest
           # - windows-latest
+    concurrency:
+      group: drawio-export-action-os-testing-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
-      - name: Testing without options
+
+      - name: Verify // it's a force-push commit on a push event?
+        run: echo "::notice ::This is a force-push commit, some tests are desactivated because of it."
+        shell: bash
+        if: ${{ github.event_name == 'push' && github.event.forced }}
+
+      # Test 1
+      - id: must-fail-on-shallow-clone
+        name: Testing fail on shallow clone
         uses: ./
+        with:
+          action-mode: recent
+        continue-on-error: true
+        # Useless on force-push commit on push event
+        if: ${{ !(github.event_name == 'push' && github.event.forced) }}
+      - name: Validate // Testing fail on shallow clone
+        run: |
+          [[ "${{ steps.must-fail-on-shallow-clone.outputs.error_message }}" == "This is a shallow git repository." ]]
+          [[ "${{ steps.must-fail-on-shallow-clone.outcome }}" == "failure" ]]
+          [[ "${{ steps.must-fail-on-shallow-clone.conclusion }}" == "success" ]]
+        shell: bash
+        # Useless on force-push commit on push event
+        if: ${{ !(github.event_name == 'push' && github.event.forced) }}
+
+      # Test 2
       - name: Testing with options
         uses: ./
         with:
           path: tests/data
           format: adoc
-          output: "test-output"
+          output: "test2-output"
           remove-page-suffix: true
           border: 1
           scale: 1
@@ -31,11 +57,77 @@ jobs:
           transparent: true
           quality: 95
           uncompressed: true
+          action-mode: all
+      - name: Validate // Testing with options
+        run: |
+          [[ -s "tests/data/test2-output/nominal-Page-1.adoc" ]]
+          [[ -s "tests/data/test2-output/nominal-Page-1.png" ]]
+          [[ -s "tests/data/test2-output/nominal-Page-2.adoc" ]]
+          [[ -s "tests/data/test2-output/nominal-Page-2.png" ]]
+        shell: bash
 
-  drawio-export-action-release:
+  os-testing-with-full-clone:
+    runs-on: ${{ matrix.os  }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          # Dockerfile actions are only supported on Linux
+          # - macos-latest
+          # - windows-latest
+    concurrency:
+      group: drawio-export-action-os-testing-with-full-clone-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Test 1
+      - name: Testing without any options
+        uses: ./
+
+      # Test 2
+      - name: Testing with recent setup
+        uses: ./
+        with:
+          action-mode: recent
+
+      # Test 3
+      - name: Testing with reference setup
+        uses: ./
+        with:
+          action-mode: reference
+          since-reference: HEAD~2
+
+      # Test 4
+      - name: Testing with only the since-reference option
+        uses: ./
+        with:
+          since-reference: HEAD~2
+
+      # Test 5
+      - id: must-fail-without-since-reference
+        name: Testing fail on missing since-reference option
+        uses: ./
+        with:
+          action-mode: reference
+        continue-on-error: true
+      - name: Validate // Testing fail on missing since-reference option
+        run: |
+          [[ "${{ steps.must-fail-without-since-reference.outputs.error_message }}" == "The 'since-reference' option is mandatory." ]]
+          [[ "${{ steps.must-fail-without-since-reference.outcome }}" == "failure" ]]
+          [[ "${{ steps.must-fail-without-since-reference.conclusion }}" == "success" ]]
+        shell: bash
+
+  release:
     runs-on: ubuntu-latest
     needs:
-      - drawio-export-action-os-testing
+      - os-testing-with-shallow-clone
+      - os-testing-with-full-clone
+    concurrency:
+      group: drawio-export-action-release-${{ github.ref }}
     steps:
       - uses: actions/checkout@v2
       - name: Release this GitHub Action

@@ -7,7 +7,7 @@ inputs:
     required: false
     default: "."
   format:
-    description: "Exported format [possible values: adoc, jpg, pdf, png, svg, vsdx, xml]"
+    description: "Exported format [default: pdf] [possible values: adoc, jpg, pdf, png, svg, vsdx, xml]"
     required: false
     default: "pdf"
   output:
@@ -46,6 +46,21 @@ inputs:
   uncompressed:
     description: "Uncompressed XML output"
     required: false
+  action-mode:
+    description: "Export mode for this action [default: auto] [possible values: auto, recent, all, reference]"
+    required: true
+    default: "auto"
+  since-reference:
+    description: "Git Reference serving as base for export (only when action-mode is reference)"
+    required: false
+  internal_push_before:
+    description: "[internal] to get 'before' value on 'push' event"
+    required: true
+    default: ${{ github.event.before }}
+  internal_push_forced:
+    description: "[internal] to get 'forced' value on 'push' event"
+    required: true
+    default: ${{ github.event.forced }}
 branding:
   icon: "layers"
   color: "purple"
@@ -58,3 +73,5 @@ runs:
     # Using 'env' to pass the modified environment variables to the Dockerfile
     INPUT_EMBED_DIAGRAM: ${{ inputs.embed-diagram }}
     INPUT_REMOVE_PAGE_SUFFIX: ${{ inputs.remove-page-suffix }}
+    INPUT_ACTION_MODE: ${{ inputs.action-mode }}
+    INPUT_SINCE_REFERENCE: ${{ inputs.since-reference }}

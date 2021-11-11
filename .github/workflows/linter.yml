@@ -1,17 +1,17 @@
 name: Lint
-
 on:
   push:
     branches:
       - v1.x
   pull_request:
-
+concurrency:
+  group: linter-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: technote-space/auto-cancel-redundant-workflow@v1
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0

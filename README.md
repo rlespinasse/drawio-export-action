@@ -2,10 +2,9 @@
 
 [![Build Status][1]][2]
 ![Linter Status][3]
-[![Public workflows that use this action.][4]][5]
-[![Licence][6]][7]
+[![Licence][4]][5]
 
-This GitHub Action will export Drawio Files based on [drawio-export][8] docker image.
+This GitHub Action will export Drawio Files based on [drawio-export][6] docker image.
 
 ## Inputs
 
@@ -63,6 +62,34 @@ Output image quality for JPEG. Default `"90"`.
 
 Uncompressed XML output
 
+### `action-mode`
+
+Export mode for this action. Default: auto
+
+Possible values:
+
+- **recent** export only the changed files since a calculated reference
+  - previously pushed commit on `push` event
+  - base commit on `pull request` event
+- **all** export all drawio files without any filter
+- **reference** export since the reference from `since-reference` option
+- **auto** will choose the more appropriated mode
+  - **reference** if `since-reference` option is set,
+  - **recent** if the reference can be calculated,
+  - **all** otherwise
+
+CAUTION: When using a mode other than `all`, you need to checkout all the history.
+
+  ```yaml
+  - uses: actions/checkout@v2
+    with:
+      fetch-depth: 0
+  ```
+
+### `since-reference`
+
+Git Reference serving as base for export. Only when action-mode is set to 'reference'.
+
 ## Example usage
 
 > Export draw.io files inside folders tree of `folder/of/drawio/files` to png files using transparent background
@@ -117,8 +144,6 @@ jobs:
 [1]: https://github.com/rlespinasse/drawio-export-action/workflows/Build/badge.svg
 [2]: https://github.com/rlespinasse/drawio-export-action/actions
 [3]: https://github.com/rlespinasse/drawio-export-action/workflows/Lint/badge.svg
-[4]: https://img.shields.io/endpoint?url=https%3A%2F%2Fapi-git-master.endbug.vercel.app%2Fapi%2Fgithub-actions%2Fused-by%3Faction%3Drlespinasse%2Fdrawio-export-action%26badge%3Dtrue
-[5]: https://github.com/search?o=desc&q=rlespinasse/drawio-export-action+path%3A.github%2Fworkflows+language%3AYAML&s=&type=Code
-[6]: https://img.shields.io/github/license/rlespinasse/drawio-export-action
-[7]: https://github.com/rlespinasse/drawio-export-action/blob/v1.x/LICENSE
-[8]: https://github.com/rlespinasse/drawio-export
+[4]: https://img.shields.io/github/license/rlespinasse/drawio-export-action
+[5]: https://github.com/rlespinasse/drawio-export-action/blob/v1.x/LICENSE
+[6]: https://github.com/rlespinasse/drawio-export
