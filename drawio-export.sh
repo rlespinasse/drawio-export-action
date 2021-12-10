@@ -67,6 +67,9 @@ elif [ "${INPUT_ACTION_MODE}" == "recent" ]; then
     if [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ]; then
       if [ -z "$(git branch --contains "${INPUT_INTERNAL_PUSH_BEFORE}" 2>&1)" ]; then
         action_mode="push"
+      elif [ "${INPUT_INTERNAL_PUSH_BEFORE}" == "0000000000000000000000000000000000000000" ]; then
+        echo "::notice ::The first commit on this branch, can't work with it. Stopping the export."
+        exit 0
       elif [ "${INPUT_INTERNAL_PUSH_FORCED}" == "true" ]; then
         echo "::notice ::The commit have been force push, can't work with it. Stopping the export."
         exit 0
