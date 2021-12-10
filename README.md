@@ -1,10 +1,57 @@
 # Drawio Export Action
 
-[![Build Status][1]][2]
-![Linter Status][3]
-[![Licence][4]][5]
+This GitHub Action will export Drawio Files based on [drawio-export][1] docker image.
 
-This GitHub Action will export Drawio Files based on [drawio-export][6] docker image.
+## Example usage
+
+> Export draw.io files inside folders tree of `folder/of/drawio/files` to png files using transparent background
+
+```yaml
+uses: rlespinasse/drawio-export-action@v1.x
+with:
+  path: folder/of/drawio/files
+  format: png
+  transparent: true
+```
+
+> `.github/workflows/drawio-export.yml` - Workflow to keep your draw.io export synchrinized
+
+```yaml
+name: Keep draw.io export synchronized
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.drawio"
+      - .github/workflows/drawio-export.yml
+jobs:
+  drawio-export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Export drawio files to asciidoctor and png files
+        uses: rlespinasse/drawio-export-action@v1.x
+        with:
+          format: adoc
+          output: drawio-assets
+          transparent: true
+
+      - name: Get author and committer info from HEAD commit
+        uses: rlespinasse/git-commit-data-action@v1.x
+
+      - name: Commit changed files
+        uses: stefanzweifel/git-auto-commit-action@v4.9.2
+        with:
+          commit_message: "docs: sync draw.io exported files"
+          commit_user_name: "${{ env.GIT_COMMIT_COMMITTER_NAME }}"
+          commit_user_email: "${{ env.GIT_COMMIT_COMMITTER_EMAIL }}"
+          commit_author: "${{ env.GIT_COMMIT_AUTHOR }}"
+```
 
 ## Inputs
 
@@ -90,60 +137,4 @@ CAUTION: When using a mode other than `all`, you need to checkout all the histor
 
 Git Reference serving as base for export. Only when action-mode is set to 'reference'.
 
-## Example usage
-
-> Export draw.io files inside folders tree of `folder/of/drawio/files` to png files using transparent background
-
-```yaml
-uses: rlespinasse/drawio-export-action@v1.x
-with:
-  path: folder/of/drawio/files
-  format: png
-  transparent: true
-```
-
-> `.github/workflows/drawio-export.yml` - Workflow to keep your draw.io export synchrinized
-
-```yaml
-name: Keep draw.io export synchronized
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "**.drawio"
-      - .github/workflows/drawio-export.yml
-jobs:
-  drawio-export:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Export drawio files to asciidoctor and png files
-        uses: rlespinasse/drawio-export-action@v1.x
-        with:
-          format: adoc
-          output: drawio-assets
-          transparent: true
-
-      - name: Get author and committer info from HEAD commit
-        uses: rlespinasse/git-commit-data-action@v1.x
-
-      - name: Commit changed files
-        uses: stefanzweifel/git-auto-commit-action@v4.9.2
-        with:
-          commit_message: "docs: sync draw.io exported files"
-          commit_user_name: "${{ env.GIT_COMMIT_COMMITTER_NAME }}"
-          commit_user_email: "${{ env.GIT_COMMIT_COMMITTER_EMAIL }}"
-          commit_author: "${{ env.GIT_COMMIT_AUTHOR }}"
-```
-
-[1]: https://github.com/rlespinasse/drawio-export-action/workflows/Build/badge.svg
-[2]: https://github.com/rlespinasse/drawio-export-action/actions
-[3]: https://github.com/rlespinasse/drawio-export-action/workflows/Lint/badge.svg
-[4]: https://img.shields.io/github/license/rlespinasse/drawio-export-action
-[5]: https://github.com/rlespinasse/drawio-export-action/blob/v1.x/LICENSE
-[6]: https://github.com/rlespinasse/drawio-export
+[1]: https://github.com/rlespinasse/drawio-export
