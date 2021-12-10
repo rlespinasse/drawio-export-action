@@ -74,7 +74,7 @@ elif [ "${INPUT_ACTION_MODE}" == "auto" ]; then
     action_mode="reference"
   elif [ -n "${GITHUB_HEAD_REF}" ]; then
     action_mode="pull_request"
-  elif [ "${GITHUB_EVENT_NAME}" == "push" ] && [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ] && [ -z "${git_contains_output}" ]; then
+  elif [ "${GITHUB_EVENT_NAME}" == "push" ] && [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ] && [ -n "${git_contains_output}" ]; then
     action_mode="push"
   else
     action_mode="all"
@@ -90,7 +90,7 @@ elif [ "${INPUT_ACTION_MODE}" == "recent" ]; then
     action_mode="pull_request"
   elif [ "${GITHUB_EVENT_NAME}" == "push" ]; then
     if [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ]; then
-      if [ -z "${git_contains_output}" ]; then
+      if [ -n "${git_contains_output}" ]; then
         action_mode="push"
       elif [ "${INPUT_INTERNAL_PUSH_BEFORE}" == "0000000000000000000000000000000000000000" ]; then
         echo "::notice ::The first commit on this branch, can't work with it. Stopping the export."
