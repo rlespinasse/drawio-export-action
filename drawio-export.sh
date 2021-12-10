@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo "::debug::Configuring args"
 args_array+=(
   "--format" "${INPUT_FORMAT}"
   "--output" "${INPUT_OUTPUT}"
@@ -46,16 +47,26 @@ if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
     error_message="This is a shallow git repository."
     echo "::set-output name=error_message::${error_message}"
-    printf "::error ::%s\n\nAdd 'fetch-depth: 0' to 'actions/checkout' step to use the '%s' mode." \
-      "${error_message}" \
-      "${INPUT_ACTION_MODE}"
+    echo "::error ::${error_message}"
+    echo "Add 'fetch-depth: 0' to 'actions/checkout' step to use the '${INPUT_ACTION_MODE}' mode."
     exit 1
   fi
 fi
 
 # Try to calculate the correct action_mode to apply
+echo "::debug::Calculating action mode to apply"
+
+git_contains_output="$(git branch --contains "${INPUT_INTERNAL_PUSH_BEFORE}" 2>&1)"
 action_mode="none"
 error_message=""
+
+echo "::debug::> action-mode              : ${INPUT_ACTION_MODE}"
+echo "::debug::> since-reference          : ${INPUT_SINCE_REFERENCE}"
+echo "::debug::> head ref                 : ${GITHUB_HEAD_REF}"
+echo "::debug::> event name               : ${GITHUB_EVENT_NAME}"
+echo "::debug::> push before              : ${INPUT_INTERNAL_PUSH_BEFORE}"
+echo "::debug::> push forced              : ${INPUT_INTERNAL_PUSH_FORCED}"
+echo "::debug::> git contains push before : ${git_contains_output}"
 if [ "${INPUT_ACTION_MODE}" == "all" ]; then
   action_mode="all"
 elif [ "${INPUT_ACTION_MODE}" == "auto" ]; then
@@ -63,7 +74,7 @@ elif [ "${INPUT_ACTION_MODE}" == "auto" ]; then
     action_mode="reference"
   elif [ -n "${GITHUB_HEAD_REF}" ]; then
     action_mode="pull_request"
-  elif [ "${GITHUB_EVENT_NAME}" == "push" ] && [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ] && [ -z "$(git branch --contains "${INPUT_INTERNAL_PUSH_BEFORE}" 2>&1)" ]; then
+  elif [ "${GITHUB_EVENT_NAME}" == "push" ] && [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ] && [ -z "${git_contains_output}" ]; then
     action_mode="push"
   else
     action_mode="all"
@@ -79,7 +90,7 @@ elif [ "${INPUT_ACTION_MODE}" == "recent" ]; then
     action_mode="pull_request"
   elif [ "${GITHUB_EVENT_NAME}" == "push" ]; then
     if [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ]; then
-      if [ -z "$(git branch --contains "${INPUT_INTERNAL_PUSH_BEFORE}" 2>&1)" ]; then
+      if [ -z "${git_contains_output}" ]; then
         action_mode="push"
       elif [ "${INPUT_INTERNAL_PUSH_BEFORE}" == "0000000000000000000000000000000000000000" ]; then
         echo "::notice ::The first commit on this branch, can't work with it. Stopping the export."
@@ -99,13 +110,15 @@ elif [ "${INPUT_ACTION_MODE}" == "recent" ]; then
 else
   error_message="Unknown action-mode."
 fi
+echo "::debug::< calculated action-mode   : ${action_mode}"
+echo "::debug::< error message            : ${error_message}"
 
-# Try to calculate the correct reference to used
+# Try to calculate the correct reference to use
+echo "::debug::Calculating reference to use"
 if [ "${action_mode}" == "none" ]; then
   echo "::set-output name=error_message::${error_message}"
-  printf "::error ::%s\n\n%s" \
-    "${error_message}" \
-    "The choosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
+  echo "::error ::${error_message}"
+  echo "::error ::The choosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
   exit 1
 elif [ "$action_mode" == "reference" ]; then
   reference="${INPUT_SINCE_REFERENCE}"
@@ -115,6 +128,7 @@ elif [ "$action_mode" == "pull_request" ]; then
 elif [ "$action_mode" == "push" ]; then
   reference="${INPUT_INTERNAL_PUSH_BEFORE}"
 fi
+echo "::debug::< calculated reference    : ${reference}"
 
 # If a reference is set, we can active the on-changes option for git repository
 if [ -n "${reference}" ]; then
