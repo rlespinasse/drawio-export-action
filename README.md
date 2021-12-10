@@ -25,6 +25,9 @@ on:
     paths:
       - "**.drawio"
       - .github/workflows/drawio-export.yml
+concurrency:
+  group: drawio-export-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   drawio-export:
     runs-on: ubuntu-latest
@@ -32,25 +35,28 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Export drawio files to asciidoctor and png files
         uses: rlespinasse/drawio-export-action@v2.x
         with:
           format: adoc
-          output: drawio-assets
           transparent: true
+          output: drawio-assets
 
       - name: Get author and committer info from HEAD commit
         uses: rlespinasse/git-commit-data-action@v1.x
+        if: github.ref == 'refs/heads/main'
 
       - name: Commit changed files
-        uses: stefanzweifel/git-auto-commit-action@v4.9.2
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "docs: sync draw.io exported files"
           commit_user_name: "${{ env.GIT_COMMIT_COMMITTER_NAME }}"
           commit_user_email: "${{ env.GIT_COMMIT_COMMITTER_EMAIL }}"
           commit_author: "${{ env.GIT_COMMIT_AUTHOR }}"
+        if: github.ref == 'refs/heads/main'
 ```
 
 ## Inputs
