@@ -39,6 +39,20 @@ if [ -n "${INPUT_WIDTH}" ]; then
   args_array+=("--width" "${INPUT_WIDTH}")
 fi
 
+# Need of full clone execpt for 'all' action mode
+if [ "${INPUT_ACTION_MODE}" != "all" ]; then
+  # Need a classic clone of the repository to work with
+  # but 'actions/checkout' make a shallow clone by default
+  if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
+    error_message="This is a shallow git repository."
+    echo "::set-output name=error_message::${error_message}"
+    printf "::error ::%s\n\nAdd 'fetch-depth: 0' to 'actions/checkout' step to use the '%s' mode." \
+      "${error_message}" \
+      "${INPUT_ACTION_MODE}"
+    exit 1
+  fi
+fi
+
 # Try to calculate the correct action_mode to apply
 action_mode="none"
 error_message=""
@@ -93,26 +107,13 @@ if [ "${action_mode}" == "none" ]; then
     "${error_message}" \
     "The choosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
   exit 1
-elif [ "${action_mode}" != "all" ]; then
-  # Need a classic clone of the repository to work with
-  # but 'actions/checkout' make a shallow clone by default
-  if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
-    error_message="This is a shallow git repository."
-    echo "::set-output name=error_message::${error_message}"
-    printf "::error ::%s\n\nAdd 'fetch-depth: 0' to 'actions/checkout' step to use the '%s' mode." \
-      "${error_message}" \
-      "${INPUT_ACTION_MODE}"
-    exit 1
-  fi
-
-  if [ "$action_mode" == "reference" ]; then
-    reference="${INPUT_SINCE_REFERENCE}"
-  elif [ "$action_mode" == "pull_request" ]; then
-    # shellcheck disable=SC2046
-    reference="$(git merge-base $(git rev-list --parents -n 1 HEAD | cut -d' ' -f2-))"
-  elif [ "$action_mode" == "push" ]; then
-    reference="${INPUT_INTERNAL_PUSH_BEFORE}"
-  fi
+elif [ "$action_mode" == "reference" ]; then
+  reference="${INPUT_SINCE_REFERENCE}"
+elif [ "$action_mode" == "pull_request" ]; then
+  # shellcheck disable=SC2046
+  reference="$(git merge-base $(git rev-list --parents -n 1 HEAD | cut -d' ' -f2-))"
+elif [ "$action_mode" == "push" ]; then
+  reference="${INPUT_INTERNAL_PUSH_BEFORE}"
 fi
 
 # If a reference is set, we can active the on-changes option for git repository
