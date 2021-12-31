@@ -131,6 +131,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Release this GitHub Action
-        uses: rlespinasse/release-that@v1.x
+        uses: rlespinasse/release-that@v1
         with:
           without-prefix: true
