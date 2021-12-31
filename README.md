@@ -7,7 +7,7 @@ This GitHub Action will export Drawio Files based on [drawio-export][1] docker i
 > Export draw.io files inside folders tree of `folder/of/drawio/files` to png files using transparent background
 
 ```yaml
-uses: rlespinasse/drawio-export-action@v2.x
+uses: rlespinasse/drawio-export-action@v2
 with:
   path: folder/of/drawio/files
   format: png
@@ -39,7 +39,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Export drawio files to asciidoctor and png files
-        uses: rlespinasse/drawio-export-action@v2.x
+        uses: rlespinasse/drawio-export-action@v2
         with:
           format: adoc
           transparent: true
