@@ -7,7 +7,7 @@ inputs:
     required: false
     default: "."
   format:
-    description: "Exported format [default: pdf] [possible values: adoc, jpg, pdf, png, svg, vsdx, xml]"
+    description: "Exported format [default: pdf] [possible values: adoc, md, jpg, pdf, png, svg, vsdx, xml]"
     required: false
     default: "pdf"
   output:

@@ -2,7 +2,7 @@ name: Lint
 on:
   push:
     branches:
-      - v1.x
+      - v2.x
   pull_request:
 concurrency:
   group: linter-${{ github.ref }}
@@ -12,12 +12,12 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
           LINTER_RULES_PATH: .
-          DEFAULT_BRANCH: v1.x
+          DEFAULT_BRANCH: v2.x
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

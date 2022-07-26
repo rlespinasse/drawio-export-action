@@ -15,7 +15,7 @@ jobs:
       group: drawio-export-action-os-testing-${{ github.ref }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Verify // it's a force-push commit on a push event?
         run: echo "::notice ::This is a force-push commit, some tests are desactivated because of it."
@@ -80,7 +80,7 @@ jobs:
       group: drawio-export-action-os-testing-with-full-clone-${{ github.ref }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -129,7 +129,7 @@ jobs:
     concurrency:
       group: drawio-export-action-release-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Release this GitHub Action
         uses: rlespinasse/release-that@v1
         with:

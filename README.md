@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
           output: drawio-assets
 
       - name: Get author and committer info from HEAD commit
-        uses: rlespinasse/git-commit-data-action@v1.x
+        uses: rlespinasse/git-commit-data-action@v1
         if: github.ref == 'refs/heads/main'
 
       - name: Commit changed files
@@ -69,7 +69,7 @@ Path to the drawio files to export. Default `"."`.
 
 Exported format. Default `"pdf"`.
 
-Possible values: adoc, jpg, pdf, png, svg, vsdx, xml
+Possible values: adoc, md, jpg, pdf, png, svg, vsdx, xml
 
 ### `output`
 
@@ -134,7 +134,7 @@ Possible values:
 CAUTION: When using a mode other than `all`, you need to checkout all the history.
 
   ```yaml
-  - uses: actions/checkout@v2
+  - uses: actions/checkout@v3
     with:
       fetch-depth: 0
   ```
