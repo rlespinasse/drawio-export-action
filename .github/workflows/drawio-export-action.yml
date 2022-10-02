@@ -1,5 +1,9 @@
 name: drawio-export-action
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - v2.x
 jobs:
   os-testing-with-shallow-clone:
     runs-on: ${{ matrix.os  }}
@@ -46,7 +50,7 @@ jobs:
         with:
           path: tests/data
           format: adoc
-          output: "test2-output"
+          output: 'test2-output'
           remove-page-suffix: true
           border: 1
           scale: 1
@@ -132,5 +136,3 @@ jobs:
       - uses: actions/checkout@v3
       - name: Release this GitHub Action
         uses: rlespinasse/release-that@v1
-        with:
-          without-prefix: true
