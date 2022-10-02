@@ -1,57 +1,57 @@
-name: "Draw.io Export Action"
-description: "GitHub Action To Export Draw.io Files"
-author: "rlespinasse"
+name: 'Draw.io Export Action'
+description: 'GitHub Action To Export Draw.io Files'
+author: 'rlespinasse'
 inputs:
   path:
-    description: "Path to the drawio files to export"
+    description: 'Path to the drawio files to export'
     required: false
-    default: "."
+    default: '.'
   format:
-    description: "Exported format [default: pdf] [possible values: adoc, md, jpg, pdf, png, svg, vsdx, xml]"
+    description: 'Exported format [default: pdf] [possible values: adoc, md, jpg, pdf, png, svg, vsdx, xml]'
     required: false
-    default: "pdf"
+    default: 'pdf'
   output:
-    description: "Exported folder name"
+    description: 'Exported folder name'
     required: false
-    default: "export"
+    default: 'export'
   remove-page-suffix:
-    description: "Remove page suffix when possible (in case of single page file)"
+    description: 'Remove page suffix when possible (in case of single page file)'
     required: false
   border:
-    description: "Sets the border width around the diagram"
+    description: 'Sets the border width around the diagram'
     required: false
-    default: "0"
+    default: '0'
   scale:
-    description: "Scales the diagram size"
+    description: 'Scales the diagram size'
     required: false
   width:
-    description: "Fits the generated image/pdf into the specified width, preserves aspect ratio"
+    description: 'Fits the generated image/pdf into the specified width, preserves aspect ratio'
     required: false
   height:
-    description: "Fits the generated image/pdf into the specified height, preserves aspect ratio"
+    description: 'Fits the generated image/pdf into the specified height, preserves aspect ratio'
     required: false
   crop:
-    description: "crops PDF to diagram size"
+    description: 'crops PDF to diagram size'
     required: false
   embed-diagram:
-    description: "Includes a copy of the diagram for PNG or PDF"
+    description: 'Includes a copy of the diagram for PNG or PDF'
     required: false
   transparent:
-    description: "Set transparent background for PNG"
+    description: 'Set transparent background for PNG'
     required: false
   quality:
-    description: "Output image quality for JPEG"
+    description: 'Output image quality for JPEG'
     required: false
-    default: "90"
+    default: '90'
   uncompressed:
-    description: "Uncompressed XML output"
+    description: 'Uncompressed XML output'
     required: false
   action-mode:
-    description: "Export mode for this action [default: auto] [possible values: auto, recent, all, reference]"
+    description: 'Export mode for this action [default: auto] [possible values: auto, recent, all, reference]'
     required: true
-    default: "auto"
+    default: 'auto'
   since-reference:
-    description: "Git Reference serving as base for export (only when action-mode is reference)"
+    description: 'Git Reference serving as base for export (only when action-mode is reference)'
     required: false
   internal_push_before:
     description: "[internal] to get 'before' value on 'push' event"
@@ -61,12 +61,15 @@ inputs:
     description: "[internal] to get 'forced' value on 'push' event"
     required: true
     default: ${{ github.event.forced }}
+outputs:
+  error_message:
+    description: Message display on the error annotation
 branding:
-  icon: "layers"
-  color: "purple"
+  icon: 'layers'
+  color: 'purple'
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: 'docker'
+  image: 'Dockerfile'
   env:
     # GitHub Action environment variables based on inputs don't convert '-' to another character
     # And since bash don't like '-' in an env var name, we use '_' instead
