@@ -40,6 +40,14 @@ if [ -n "${INPUT_WIDTH}" ]; then
   args_array+=("--width" "${INPUT_WIDTH}")
 fi
 
+if [ "${INPUT_ENABLE_PLUGINS}" == "true" ]; then
+  args_array+=("--enable-plugins")
+fi
+
+if [ "${INPUT_EMBED_SVG_IMAGES}" == "true" ]; then
+  args_array+=("--embed-svg-images")
+fi
+
 # Need of full clone execpt for 'all' action mode
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # Need a classic clone of the repository to work with

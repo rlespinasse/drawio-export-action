@@ -24,6 +24,9 @@ inputs:
   scale:
     description: 'Scales the diagram size'
     required: false
+  enable-plugins:
+    description: 'Enable Plugins'
+    required: false
   width:
     description: 'Fits the generated image/pdf into the specified width, preserves aspect ratio'
     required: false
@@ -34,7 +37,7 @@ inputs:
     description: 'crops PDF to diagram size'
     required: false
   embed-diagram:
-    description: 'Includes a copy of the diagram for PNG or PDF'
+    description: 'Includes a copy of the diagram for PDF, PNG, or SVG'
     required: false
   transparent:
     description: 'Set transparent background for PNG'
@@ -45,6 +48,9 @@ inputs:
     default: '90'
   uncompressed:
     description: 'Uncompressed XML output'
+    required: false
+  embed-svg-images:
+    description: 'Embed Images in SVG file'
     required: false
   action-mode:
     description: 'Export mode for this action [default: auto] [possible values: auto, recent, all, reference]'
@@ -76,5 +82,7 @@ runs:
     # Using 'env' to pass the modified environment variables to the Dockerfile
     INPUT_EMBED_DIAGRAM: ${{ inputs.embed-diagram }}
     INPUT_REMOVE_PAGE_SUFFIX: ${{ inputs.remove-page-suffix }}
+    INPUT_ENABLE_PLUGINS: ${{ inputs.enable-plugins }}
+    INPUT_EMBED_SVG_IMAGES: ${{ inputs.embed-evg-images }}
     INPUT_ACTION_MODE: ${{ inputs.action-mode }}
     INPUT_SINCE_REFERENCE: ${{ inputs.since-reference }}
