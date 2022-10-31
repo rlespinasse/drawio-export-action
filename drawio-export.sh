@@ -131,7 +131,7 @@ if [ "${action_mode}" == "none" ]; then
   if [ -f "$GITHUB_OUTPUT" ]; then
     echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
   else
-    echo "::set-output  name=error_message::${error_message}"
+    echo "::set-output name=error_message::${error_message}"
   fi
   echo "::error ::${error_message}"
   echo "::error ::The choosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
