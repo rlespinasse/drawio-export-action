@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "terminology": {
+      "defaultTerms": true,
+      "exclude": [
+        "PDF",
+        "PNG"
+      ]
+    }
+  }
+}

@@ -14,7 +14,7 @@ with:
   transparent: true
 ```
 
-> `.github/workflows/drawio-export.yml` - Workflow to keep your draw.io export synchrinized
+> `.github/workflows/drawio-export.yml` - Workflow to keep your draw.io export synchronized
 
 ```yaml
 name: Keep draw.io export synchronized
