@@ -54,7 +54,11 @@ if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # but 'actions/checkout' make a shallow clone by default
   if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
     error_message="This is a shallow git repository."
-    echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
+    if [ -f "$GITHUB_OUTPUT" ]; then
+      echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
+    else
+      echo "::set-output name=error_message::${error_message}"
+    fi
     echo "::error ::${error_message}"
     echo "Add 'fetch-depth: 0' to 'actions/checkout' step to use the '${INPUT_ACTION_MODE}' mode."
     exit 1
@@ -124,7 +128,11 @@ echo "::debug::< error message            : ${error_message}"
 # Try to calculate the correct reference to use
 echo "::debug::Calculating reference to use"
 if [ "${action_mode}" == "none" ]; then
-  echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
+  if [ -f "$GITHUB_OUTPUT" ]; then
+    echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
+  else
+    echo "::set-output name=error_message::${error_message}"
+  fi
   echo "::error ::${error_message}"
   echo "::error ::The choosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
   exit 1
