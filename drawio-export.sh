@@ -57,7 +57,7 @@ if [ "${INPUT_ACTION_MODE}" != "all" ]; then
     if [ -f "$GITHUB_OUTPUT" ]; then
       echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
     else
-      echo "::set-output  name=error_message::${error_message}"
+      echo "::set-output name=error_message::${error_message}"
     fi
     echo "::error ::${error_message}"
     echo "Add 'fetch-depth: 0' to 'actions/checkout' step to use the '${INPUT_ACTION_MODE}' mode."
