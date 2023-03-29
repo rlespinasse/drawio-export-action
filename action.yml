@@ -83,6 +83,6 @@ runs:
     INPUT_EMBED_DIAGRAM: ${{ inputs.embed-diagram }}
     INPUT_REMOVE_PAGE_SUFFIX: ${{ inputs.remove-page-suffix }}
     INPUT_ENABLE_PLUGINS: ${{ inputs.enable-plugins }}
-    INPUT_EMBED_SVG_IMAGES: ${{ inputs.embed-evg-images }}
+    INPUT_EMBED_SVG_IMAGES: ${{ inputs.embed-svg-images }}
     INPUT_ACTION_MODE: ${{ inputs.action-mode }}
     INPUT_SINCE_REFERENCE: ${{ inputs.since-reference }}
