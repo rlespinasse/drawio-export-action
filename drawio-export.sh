@@ -51,8 +51,12 @@ fi
 # Need of full clone execpt for 'all' action mode
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # Need a classic clone of the repository to work with
-  # but 'actions/checkout' make a shallow clone by default
-  if $(git rev-parse --is-shallow-repository); then
+  # but 'actions/checkout' make a shallow clone by default$
+  git rev-parse --is-shallow-repository
+  git --version
+  bash --version
+
+  if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
     error_message="This is a shallow git repository."
     if [ -f "$GITHUB_OUTPUT" ]; then
       echo "error_message=${error_message}" >>"$GITHUB_OUTPUT"
