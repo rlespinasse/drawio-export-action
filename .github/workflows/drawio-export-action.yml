@@ -37,7 +37,6 @@ jobs:
         if: ${{ !(github.event_name == 'push' && github.event.forced) }}
       - name: Validate // Testing fail on shallow clone
         run: |
-          git rev-parse --is-shallow-repository
           [[ "${{ steps.must-fail-on-shallow-clone.outputs.error_message }}" == "This is a shallow git repository." ]]
           [[ "${{ steps.must-fail-on-shallow-clone.outcome }}" == "failure" ]]
           [[ "${{ steps.must-fail-on-shallow-clone.conclusion }}" == "success" ]]
