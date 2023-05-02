@@ -52,10 +52,7 @@ fi
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # Need a classic clone of the repository to work with
   # but 'actions/checkout' make a shallow clone by default$
-  git rev-parse --is-shallow-repository
-  git --version
-  bash --version
-
+  git config --system --add safe.directory '*'
   if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
     error_message="This is a shallow git repository."
     if [ -f "$GITHUB_OUTPUT" ]; then
