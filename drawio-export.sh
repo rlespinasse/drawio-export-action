@@ -50,6 +50,9 @@ fi
 
 # Need of full clone execpt for 'all' action mode
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
+  # To correctly configure git setup inside a container
+  # See https://github.com/actions/checkout/issues/1169
+  git config --system --add safe.directory '/github/workspace'
   # Need a classic clone of the repository to work with
   # but 'actions/checkout' make a shallow clone by default
   if [ "$(git rev-parse --is-shallow-repository)" == "true" ]; then
