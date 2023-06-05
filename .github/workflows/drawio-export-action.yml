@@ -137,4 +137,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Release this GitHub Action
-        uses: rlespinasse/release-that@node-14
+        uses: rlespinasse/release-that@v1
