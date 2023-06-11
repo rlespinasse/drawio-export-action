@@ -1,23 +1,27 @@
-name: Lint
-on:
-  push:
-    branches:
-      - v2.x
-  pull_request:
-concurrency:
-  group: linter-${{ github.ref }}
-  cancel-in-progress: true
+---
+name: Lint Code Base
+
+on: pull_request
+
 jobs:
-  lint:
-    name: Lint
+  build:
+    name: Lint Code Base
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
-      - uses: github/super-linter@v4
+
+      - name: Lint Code Base
+        uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: false
-          LINTER_RULES_PATH: .
           DEFAULT_BRANCH: v2.x
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
