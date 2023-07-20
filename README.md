@@ -147,4 +147,9 @@ CAUTION: When using a mode other than `all`, you need to checkout all the histor
 
 Git Reference serving as base for export. Only when action-mode is set to 'reference'.
 
+## Miscellaneous
+
+- [Additional fonts are available][2]
+
 [1]: https://github.com/rlespinasse/drawio-export
+[2]: https://github.com/rlespinasse/drawio-export#additional-fonts
