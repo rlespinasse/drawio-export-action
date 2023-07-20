@@ -69,11 +69,15 @@ Path to the drawio files to export. Default `"."`.
 
 Exported format. Default `"pdf"`.
 
-Possible values: adoc, md, jpg, pdf, png, svg, vsdx, xml
+Possible values: `adoc`, `md`, `jpg`, `pdf`, `png`, `svg`, `vsdx`, `xml`
 
 ### `output`
 
 Exported folder name. Default `"export"`.
+
+> **Relative from the exported drawio file**
+>
+> A file from `/path/to/file.drawio` will be exported to `/path/to/export/file-{page}.{ext}` by default.
 
 ### `remove-page-suffix`
 
@@ -89,11 +93,11 @@ Scales the diagram size
 
 ### `width`
 
-Fits the generated image/pdf into the specified width, preserves aspect ratio
+Fits the generated `image/pdf` into the specified width, preserves aspect ratio
 
 ### `height`
 
-Fits the generated image/pdf into the specified height, preserves aspect ratio
+Fits the generated `image/pdf` into the specified height, preserves aspect ratio
 
 ### `crop`
 
