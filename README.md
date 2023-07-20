@@ -75,6 +75,10 @@ Possible values: adoc, md, jpg, pdf, png, svg, vsdx, xml
 
 Exported folder name. Default `"export"`.
 
+> **Relative from the exported drawio file**
+> 
+> A file from `/path/to/file.drawio` will be exported to `/path/to/export/file-{page}.{ext}` by default.
+
 ### `remove-page-suffix`
 
 Remove page suffix when possible (in case of single page file)
