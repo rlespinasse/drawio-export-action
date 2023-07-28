@@ -161,4 +161,4 @@ args_array+=("${INPUT_PATH}")
 
 echo Options: "${args_array[@]}"
 
-/opt/drawio-exporter/runner-no-security-warnings.sh "${args_array[@]}"
+/opt/drawio-exporter/runner.sh "${args_array[@]}"
