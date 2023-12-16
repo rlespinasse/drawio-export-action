@@ -89,7 +89,7 @@ elif [ "${INPUT_ACTION_MODE}" == "auto" ]; then
     action_mode="reference"
   elif [ -n "${GITHUB_HEAD_REF}" ]; then
     action_mode="pull_request"
-  elif [ "${GITHUB_EVENT_NAME}" == "push" ] && [ -n "${INPUT_INTERNAL_PUSH_BEFORE}" ] && [ -n "${git_contains_output}" ]; then
+  elif [ "${GITHUB_EVENT_NAME}" == "push" ] && [ -n "${git_contains_output}" ] && [ "${INPUT_INTERNAL_PUSH_BEFORE}" != "0000000000000000000000000000000000000000" ] && [ "${INPUT_INTERNAL_PUSH_FORCED}" == "false" ]; then
     action_mode="push"
   else
     action_mode="all"
