@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - v2.x
+
+permissions: read-all
+
 jobs:
   os-testing-with-shallow-clone:
     runs-on: ${{ matrix.os  }}
@@ -50,7 +53,7 @@ jobs:
         with:
           path: tests/data
           format: adoc
-          output: 'test2-output'
+          output: "test2-output"
           remove-page-suffix: true
           border: 1
           scale: 1
@@ -129,6 +132,11 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      id-token: write
+      packages: write
     needs:
       - os-testing-with-shallow-clone
       - os-testing-with-full-clone
