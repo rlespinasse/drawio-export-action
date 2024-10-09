@@ -3,6 +3,8 @@ name: Lint Code Base
 
 on: pull_request
 
+permissions: read-all
+
 jobs:
   build:
     name: Lint Code Base
