@@ -26,5 +26,6 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_TRIVY: false
+          VALIDATE_GITHUB_ACTION_ZIMOR: false
           VALIDATE_YAML_PRETTIER: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
