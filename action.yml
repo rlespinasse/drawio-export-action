@@ -52,6 +52,9 @@ inputs:
   embed-svg-images:
     description: 'Embed Images in SVG file'
     required: false
+  all-pages:
+    description: 'Export all pages (for PDF format only)'
+    required: false
   action-mode:
     description: 'Export mode for this action [default: auto] [possible values: auto, recent, all, reference]'
     required: true
@@ -84,5 +87,6 @@ runs:
     INPUT_REMOVE_PAGE_SUFFIX: ${{ inputs.remove-page-suffix }}
     INPUT_ENABLE_PLUGINS: ${{ inputs.enable-plugins }}
     INPUT_EMBED_SVG_IMAGES: ${{ inputs.embed-svg-images }}
+    INPUT_ALL_PAGES: ${{ inputs.all-pages }}
     INPUT_ACTION_MODE: ${{ inputs.action-mode }}
     INPUT_SINCE_REFERENCE: ${{ inputs.since-reference }}
