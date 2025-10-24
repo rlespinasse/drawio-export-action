@@ -63,6 +63,9 @@ jobs:
           enable-plugins: true
           embed-svg-images: true
           embed-diagram: true
+          embed-svg-fonts: true
+          svg-theme: light
+          svg-links-target: auto
           transparent: true
           quality: 95
           uncompressed: true

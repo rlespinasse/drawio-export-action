@@ -123,6 +123,24 @@ Uncompressed XML output
 
 Export all pages (for PDF format only)
 
+### `embed-svg-fonts`
+
+Embed Fonts in SVG file. Default: `"true"`.
+
+Possible values: `true`, `false`
+
+### `svg-theme`
+
+Theme of the exported SVG image. Default: `"light"`.
+
+Possible values: `dark`, `light`
+
+### `svg-links-target`
+
+Target of links in the exported SVG image. Default: `"auto"`.
+
+Possible values: `auto`, `new-win`, `same-win`
+
 ### `action-mode`
 
 Export mode for this action. Default: auto

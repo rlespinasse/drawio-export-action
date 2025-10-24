@@ -52,6 +52,18 @@ if [ "${INPUT_ALL_PAGES}" == "true" ]; then
   args_array+=("--all-pages")
 fi
 
+if [ -n "${INPUT_EMBED_SVG_FONTS}" ]; then
+  args_array+=("--embed-svg-fonts" "${INPUT_EMBED_SVG_FONTS}")
+fi
+
+if [ -n "${INPUT_SVG_THEME}" ]; then
+  args_array+=("--svg-theme" "${INPUT_SVG_THEME}")
+fi
+
+if [ -n "${INPUT_SVG_LINKS_TARGET}" ]; then
+  args_array+=("--svg-links-target" "${INPUT_SVG_LINKS_TARGET}")
+fi
+
 # Need of full clone execpt for 'all' action mode
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # To correctly configure git setup inside a container

@@ -55,6 +55,18 @@ inputs:
   all-pages:
     description: 'Export all pages (for PDF format only)'
     required: false
+  embed-svg-fonts:
+    description: 'Embed Fonts in SVG file [default: true] [possible values: true, false]'
+    required: false
+    default: 'true'
+  svg-theme:
+    description: 'Theme of the exported SVG image [default: light] [possible values: dark, light]'
+    required: false
+    default: 'light'
+  svg-links-target:
+    description: 'Target of links in the exported SVG image [default: auto] [possible values: auto, new-win, same-win]'
+    required: false
+    default: 'auto'
   action-mode:
     description: 'Export mode for this action [default: auto] [possible values: auto, recent, all, reference]'
     required: true
@@ -88,5 +100,8 @@ runs:
     INPUT_ENABLE_PLUGINS: ${{ inputs.enable-plugins }}
     INPUT_EMBED_SVG_IMAGES: ${{ inputs.embed-svg-images }}
     INPUT_ALL_PAGES: ${{ inputs.all-pages }}
+    INPUT_EMBED_SVG_FONTS: ${{ inputs.embed-svg-fonts }}
+    INPUT_SVG_THEME: ${{ inputs.svg-theme }}
+    INPUT_SVG_LINKS_TARGET: ${{ inputs.svg-links-target }}
     INPUT_ACTION_MODE: ${{ inputs.action-mode }}
     INPUT_SINCE_REFERENCE: ${{ inputs.since-reference }}
