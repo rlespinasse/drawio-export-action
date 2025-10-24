@@ -1,6 +1,6 @@
 # Drawio Export Action
 
-This GitHub Action will export Drawio Files based on [drawio-export][1] docker image.
+This GitHub Action will export Drawio Files based on [drawio-export][1] Docker image.
 
 ## Example usage
 
@@ -118,6 +118,10 @@ Output image quality for JPEG. Default `"90"`.
 ### `uncompressed`
 
 Uncompressed XML output
+
+### `all-pages`
+
+Export all pages (for PDF format only)
 
 ### `action-mode`
 

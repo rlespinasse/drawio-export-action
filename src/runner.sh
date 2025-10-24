@@ -48,6 +48,10 @@ if [ "${INPUT_EMBED_SVG_IMAGES}" == "true" ]; then
   args_array+=("--embed-svg-images")
 fi
 
+if [ "${INPUT_ALL_PAGES}" == "true" ]; then
+  args_array+=("--all-pages")
+fi
+
 # Need of full clone execpt for 'all' action mode
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # To correctly configure git setup inside a container

@@ -53,7 +53,7 @@ jobs:
         with:
           path: tests/data
           format: adoc
-          output: "test2-output"
+          output: 'test2-output'
           remove-page-suffix: true
           border: 1
           scale: 1
@@ -75,8 +75,22 @@ jobs:
           [[ -s "tests/data/test2-output/nominal-Page-2.png" ]]
         shell: bash
 
+      # Test 3
+      - name: Testing PDF with all-pages option
+        uses: ./
+        with:
+          path: tests/data
+          format: pdf
+          output: 'test3-output'
+          all-pages: true
+          action-mode: all
+      - name: Validate // Testing PDF with all-pages option
+        run: |
+          [[ -s "tests/data/test3-output/nominal.pdf" ]]
+        shell: bash
+
   os-testing-with-full-clone:
-    runs-on: ${{ matrix.os  }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
