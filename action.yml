@@ -1,4 +1,4 @@
-name: 'Draw.io Export Action'
+name: 'Drawio Export Action'
 description: 'GitHub Action To Export Draw.io Files'
 author: 'rlespinasse'
 inputs:
