@@ -27,9 +27,8 @@ jobs:
         shell: bash
 
   # This job builds and pushes the Docker image to GitHub Container Registry
-  # Note: For PRs, the image is tagged as pr-X but tests use the 'latest' tag.
-  # This means PR tests verify functionality but not Dockerfile changes.
-  # Dockerfile changes should be tested manually or after merge to v2.x.
+  # After the initial image is published, action.yml can be updated to reference
+  # the pre-built image instead of building from Dockerfile on every run.
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
@@ -74,7 +73,6 @@ jobs:
 
   os-testing-with-shallow-clone:
     runs-on: ${{ matrix.os  }}
-    needs: build-and-push-image
     strategy:
       fail-fast: false
       matrix:
@@ -159,7 +157,6 @@ jobs:
 
   os-testing-with-full-clone:
     runs-on: ${{ matrix.os }}
-    needs: build-and-push-image
     strategy:
       fail-fast: false
       matrix:

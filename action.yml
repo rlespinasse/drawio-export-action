@@ -90,7 +90,7 @@ branding:
   color: 'purple'
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/rlespinasse/drawio-export-action:latest'
+  image: 'Dockerfile'
   env:
     # GitHub Action environment variables based on inputs don't convert '-' to another character
     # And since bash don't like '-' in an env var name, we use '_' instead
