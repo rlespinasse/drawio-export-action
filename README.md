@@ -175,9 +175,18 @@ Git Reference serving as base for export. Only when action-mode is set to 'refer
 
 ## Development
 
-This action uses a pre-built Docker image hosted on GitHub Container Registry (ghcr.io) to provide fast execution without rebuilding the image on every run. The image is automatically built and pushed by the CI workflow when changes are pushed or when pull requests are created.
+This action is being migrated to use pre-built Docker images hosted on GitHub Container Registry (ghcr.io) to provide fast execution without rebuilding the image on every run.
 
-**Note for contributors**: When modifying the Dockerfile, the changes are built and tested as part of the PR workflow. The build-and-push job runs before tests, ensuring tests use the newly built image.
+**Migration Status:**
+- ✅ Workflow updated to build and push images to GHCR
+- ⏳ action.yml still uses Dockerfile (will be updated after initial image publish)
+
+**Planned Docker Image Tags:**
+- `v2.x`: Will be updated on every push to the v2.x branch
+- `v2`, `v2.42`, `v2.42.0`: Will be created on releases for version pinning
+- `pr-X`: Created for pull requests for verification
+
+**After Migration:** Once the initial image is published to GHCR, action.yml will be updated to reference `docker://ghcr.io/rlespinasse/drawio-export-action:v2.x`, eliminating the ~1 minute build time for users.
 
 **Note for maintainers**: Ensure the Docker image package on GHCR is set to public visibility so that users can pull the image when using the action.
 
