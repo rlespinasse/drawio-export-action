@@ -179,5 +179,7 @@ This action uses a pre-built Docker image hosted on GitHub Container Registry (g
 
 **Note for contributors**: When modifying the Dockerfile, the changes are built and tested as part of the PR workflow. The build-and-push job runs before tests, ensuring tests use the newly built image.
 
+**Note for maintainers**: Ensure the Docker image package on GHCR is set to public visibility so that users can pull the image when using the action.
+
 [1]: https://github.com/rlespinasse/drawio-export
 [2]: https://github.com/rlespinasse/drawio-export#additional-fonts
