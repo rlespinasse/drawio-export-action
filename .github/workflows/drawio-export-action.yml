@@ -26,9 +26,9 @@ jobs:
         run: make unit-test
         shell: bash
 
-  # This job builds and pushes the Docker image to GitHub Container Registry
-  # After the initial image is published, action.yml can be updated to reference
-  # the pre-built image instead of building from Dockerfile on every run.
+  # This job builds and pushes the Docker image to GitHub Container Registry.
+  # The image is tagged as 'latest' and used by the action to avoid rebuilding
+  # on every run, significantly speeding up execution time for users.
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
@@ -59,7 +59,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/v2.x' }}
+            type=raw,value=latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -73,6 +73,7 @@ jobs:
 
   os-testing-with-shallow-clone:
     runs-on: ${{ matrix.os  }}
+    needs: build-and-push-image
     strategy:
       fail-fast: false
       matrix:
@@ -157,6 +158,7 @@ jobs:
 
   os-testing-with-full-clone:
     runs-on: ${{ matrix.os }}
+    needs: build-and-push-image
     strategy:
       fail-fast: false
       matrix:
