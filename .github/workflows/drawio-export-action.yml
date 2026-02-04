@@ -29,7 +29,8 @@ jobs:
   # This job builds and pushes the Docker image to GitHub Container Registry.
   # For v2.x branch: tagged as 'v2.x' and 'latest' (used by action.yml)
   # For PRs: tagged as 'pr-X' (built but not used in tests)
-  # For releases: tagged with version numbers (v2, v2.42, v2.42.0)
+  # For releases: tagged with version numbers (v2, v2.X, v2.X.Y)
+  # Note: After Phase 2 migration, test jobs will depend on this job.
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:

@@ -183,7 +183,7 @@ This action is being migrated to use pre-built Docker images hosted on GitHub Co
 
 **Planned Docker Image Tags:**
 - `v2.x`: Will be updated on every push to the v2.x branch
-- `v2`, `v2.42`, `v2.42.0`: Will be created on releases for version pinning
+- `v2`, `v2.X`, `v2.X.Y`: Will be created on releases for version pinning
 - `pr-X`: Created for pull requests for verification
 
 **After Migration:** Once the initial image is published to GHCR, action.yml will be updated to reference `docker://ghcr.io/rlespinasse/drawio-export-action:v2.x`, eliminating the ~1 minute build time for users.
