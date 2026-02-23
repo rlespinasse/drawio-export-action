@@ -69,7 +69,7 @@ Path to the drawio files to export. Default `"."`.
 
 Exported format. Default `"pdf"`.
 
-Possible values: `adoc`, `md`, `jpg`, `pdf`, `png`, `svg`, `vsdx`, `xml`
+Possible values: `adoc`, `md`, `jpg`, `pdf`, `png`, `svg`, `xml`
 
 ### `output`
 
