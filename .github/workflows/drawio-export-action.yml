@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Verify // it's a force-push commit on a push event?
-        run: echo "::notice ::This is a force-push commit, some tests are desactivated because of it."
+        run: echo "::notice ::This is a force-push commit, some tests are deactivated because of it."
         shell: bash
         if: ${{ github.event_name == 'push' && github.event.forced }}
 
