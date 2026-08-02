@@ -2,8 +2,6 @@
 
 - Status: Accepted
 - Date: 2026-08-02
-- Delivers: issue #36
-- By: developer (with the user)
 
 ## Context
 
