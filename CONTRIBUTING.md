@@ -22,7 +22,7 @@ Include the relevant issue number if applicable.
 
 ## How to test your changes
 
-The entrypoint logic lives in `src/lib.sh` (pure bash functions) and is wired up by `src/runner.sh` inside the Docker image.
+The entrypoint logic lives in `src/lib.sh` (pure Bash functions) and is wired up by `src/runner.sh` inside the Docker image.
 
 * Install the test dependencies once with `make setup-test` ([bats][6]).
 

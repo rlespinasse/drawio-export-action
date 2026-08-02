@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "${SCRIPT_DIR}/lib.sh"
 
-# Need of full clone execpt for 'all' action mode
+# Need of full clone except for 'all' action mode
 if [ "${INPUT_ACTION_MODE}" != "all" ]; then
   # To correctly configure git setup inside a container
   # See https://github.com/actions/checkout/issues/1169
@@ -29,7 +29,7 @@ fi
 
 if [ "${action_mode}" == "none" ]; then
   report_error "${error_message}"
-  echo "::error ::The choosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
+  echo "::error ::The chosen action mode '${INPUT_ACTION_MODE}' can't be used. Consider switching to 'auto' (default value)."
   exit 1
 fi
 

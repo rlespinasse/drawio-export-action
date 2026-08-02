@@ -29,4 +29,8 @@ jobs:
           VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
           VALIDATE_TRIVY: false
           VALIDATE_YAML_PRETTIER: false
+          # bats' `run`/`@test` subshell semantics aren't understood by
+          # shellcheck, which produces systematic false positives on .bats
+          # files (unused/unassigned globals, lost subshell exports).
+          FILTER_REGEX_EXCLUDE: (^|/)tests/unit/.*\.bats$
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
