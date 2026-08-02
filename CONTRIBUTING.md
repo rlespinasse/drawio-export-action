@@ -20,6 +20,19 @@ Include the relevant issue number if applicable.
 
 * Suggest your change by [opening a 'Feature request' issue][5]
 
+## How to test your changes
+
+The entrypoint logic lives in `src/lib.sh` (pure bash functions) and is wired up by `src/runner.sh` inside the Docker image.
+
+* Install the test dependencies once with `make setup-test` ([bats][6]).
+
+* Run the unit tests of `src/lib.sh` with `make unit-test`.
+They run outside of the Docker image, so they are fast and need no build.
+Add your test cases to `tests/unit`.
+
+* Run the integration tests with `make test`.
+They build the Docker image first and run against it.
+
 ## Do you have questions about the source code
 
 * [open an issue][3] with your question.
@@ -31,3 +44,4 @@ Thanks!
 [3]: https://github.com/rlespinasse/drawio-export-action/issues/new
 [4]: https://github.com/rlespinasse/drawio-export-action/issues/new?assignees=&labels=bug&template=bug_report.md&title=
 [5]: https://github.com/rlespinasse/drawio-export-action/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=
+[6]: https://github.com/bats-core/bats-core
