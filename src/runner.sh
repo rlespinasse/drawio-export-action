@@ -34,9 +34,9 @@ if [ "${action_mode}" == "none" ]; then
 fi
 
 # Try to calculate the correct reference to use
-resolve_reference
+resolve_reference || exit 1
 
-build_args_array
+build_args_array || exit 1
 
 echo Options: "${args_array[@]}"
 

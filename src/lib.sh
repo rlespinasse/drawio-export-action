@@ -5,6 +5,13 @@
 # This file is sourced by 'runner.sh' inside the Docker image,
 # and by the bats unit tests (see 'tests/unit') outside of it.
 # It only defines functions, so sourcing it has no side effect.
+#
+# Required call order, each step consuming the globals set by the previous one
+# (enforced by the guards at the top of the two last functions):
+#
+#   resolve_action_mode  -> sets 'action_mode'
+#   resolve_reference    -> reads 'action_mode', sets 'reference'
+#   build_args_array     -> reads 'reference', sets 'args_array'
 
 # Wrapper around 'git branch --contains' (stdout and stderr merged),
 # isolated to be replaceable in the unit tests.
@@ -113,7 +120,14 @@ resolve_action_mode() {
 #
 # Set the global variable 'reference' (empty when the whole repository
 # has to be exported).
+#
+# Requires 'resolve_action_mode' to have been called first.
 resolve_reference() {
+  if [ -z "${action_mode+set}" ]; then
+    echo "::error ::resolve_reference called before resolve_action_mode."
+    return 1
+  fi
+
   echo "::debug::Calculating reference to use"
 
   reference=""
@@ -132,7 +146,14 @@ resolve_reference() {
 # and the global variable 'reference'.
 #
 # Set the global variable 'args_array'.
+#
+# Requires 'resolve_reference' to have been called first.
 build_args_array() {
+  if [ -z "${reference+set}" ]; then
+    echo "::error ::build_args_array called before resolve_reference."
+    return 1
+  fi
+
   echo "::debug::Configuring args"
 
   args_array=(

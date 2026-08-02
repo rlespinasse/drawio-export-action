@@ -29,9 +29,19 @@ The entrypoint logic lives in `src/lib.sh` (pure bash functions) and is wired up
 * Run the unit tests of `src/lib.sh` with `make unit-test`.
 They run outside of the Docker image, so they are fast and need no build.
 Add your test cases to `tests/unit`.
+The `unit-testing` job of the `drawio-export-action` workflow runs them on every
+pull request, and the release is gated on them.
 
-* Run the integration tests with `make test`.
-They build the Docker image first and run against it.
+* `make test` builds the Docker image (`make build`) and then runs `bats -r tests`,
+which currently resolves to the same suite as `make unit-test` since no test
+files exist yet outside of `tests/unit`. The target also exports a `DOCKER_IMAGE`
+environment variable and prepares `tests/output` and the `tests/data` fixtures
+(e.g. `tests/data/nominal.drawio`), in place for integration tests that exercise
+the built image directly — add such tests under `tests/` (outside `tests/unit`)
+once they're written.
+
+* `make cleanup` removes generated export folders (`export`, `test-*`) and `tests/output`;
+`make test` runs it automatically before building.
 
 ## Do you have questions about the source code
 

@@ -13,6 +13,9 @@ setup() {
   INPUT_EMBED_SVG_FONTS="true"
   INPUT_SVG_THEME="light"
   INPUT_SVG_LINKS_TARGET="auto"
+  # 'build_args_array' expects 'resolve_reference' to have run first,
+  # an empty reference standing for "export the whole repository"
+  reference=""
 }
 
 # Compare the built arguments to the expected ones

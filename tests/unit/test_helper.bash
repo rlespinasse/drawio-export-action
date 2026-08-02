@@ -8,18 +8,24 @@ load_lib() {
   source "${BATS_TEST_DIRNAME}/../../src/lib.sh"
 }
 
+# Globals set by 'src/lib.sh' as the "output" of its functions.
+LIB_OUTPUT_GLOBALS=(action_mode error_message notice_message reference args_array)
+
 # Unset every input the logic under test relies on,
 # so that each test only sets what it needs.
+#
+# Inputs are unset by prefix instead of by an enumerated list: 'src/lib.sh' is
+# sourced into the bats process (not a subshell), so anything left over by a
+# previous test - or inherited from a real GitHub Actions environment when this
+# suite runs in CI - leaks into the next test. Unsetting 'INPUT_*' and
+# 'GITHUB_*' wholesale keeps this helper correct when a new input is added to
+# 'action.yml'/'src/lib.sh' without anyone remembering to update this file.
 reset_inputs() {
-  unset INPUT_PATH INPUT_FORMAT INPUT_OUTPUT INPUT_BORDER INPUT_QUALITY \
-    INPUT_EMBED_DIAGRAM INPUT_REMOVE_PAGE_SUFFIX INPUT_TRANSPARENT \
-    INPUT_UNCOMPRESSED INPUT_CROP INPUT_SCALE INPUT_HEIGHT INPUT_WIDTH \
-    INPUT_ENABLE_PLUGINS INPUT_EMBED_SVG_IMAGES INPUT_ALL_PAGES \
-    INPUT_EMBED_SVG_FONTS INPUT_SVG_THEME INPUT_SVG_LINKS_TARGET \
-    INPUT_ACTION_MODE INPUT_SINCE_REFERENCE \
-    INPUT_INTERNAL_PUSH_BEFORE INPUT_INTERNAL_PUSH_FORCED \
-    GITHUB_HEAD_REF GITHUB_EVENT_NAME GITHUB_OUTPUT \
-    action_mode error_message notice_message reference args_array
+  local name
+  for name in $(compgen -v INPUT_ || true) $(compgen -v GITHUB_ || true); do
+    unset "${name}"
+  done
+  unset "${LIB_OUTPUT_GLOBALS[@]}"
 }
 
 # Replace 'git branch --contains' by a canned output,
