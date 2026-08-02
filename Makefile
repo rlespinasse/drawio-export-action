@@ -1,4 +1,4 @@
-.PHONY: build run setup-test test cleanup
+.PHONY: build run setup-test unit-test test cleanup
 
 DOCKER_IMAGE?=rlespinasse/drawio-export-action:local
 build:
@@ -10,6 +10,10 @@ run:
 
 setup-test:
 	@npm install bats
+
+# Unit tests of 'src/lib.sh', no Docker image needed
+unit-test:
+	@npx bats -r tests/unit
 
 test: cleanup build
 	@mkdir -p tests/output

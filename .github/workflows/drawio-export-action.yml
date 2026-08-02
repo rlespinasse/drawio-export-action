@@ -8,6 +8,24 @@ on:
 permissions: read-all
 
 jobs:
+  unit-testing:
+    name: Unit tests of src/lib.sh
+    runs-on: ubuntu-latest
+    concurrency:
+      group: drawio-export-action-unit-testing-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v7
+
+      # No Docker image needed here, the unit tests source 'src/lib.sh' directly
+      - name: Install bats
+        run: make setup-test
+        shell: bash
+
+      - name: Testing src/lib.sh
+        run: make unit-test
+        shell: bash
+
   os-testing-with-shallow-clone:
     runs-on: ${{ matrix.os  }}
     strategy:
@@ -155,6 +173,7 @@ jobs:
       id-token: write
       packages: write
     needs:
+      - unit-testing
       - os-testing-with-shallow-clone
       - os-testing-with-full-clone
     concurrency:
