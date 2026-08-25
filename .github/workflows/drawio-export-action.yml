@@ -26,6 +26,10 @@ jobs:
         run: make unit-test
         shell: bash
 
+  # This job builds and pushes the Docker image to GitHub Container Registry
+  # Note: For PRs, the image is tagged as pr-X but tests use the 'latest' tag.
+  # This means PR tests verify functionality but not Dockerfile changes.
+  # Dockerfile changes should be tested manually or after merge to v2.x.
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:

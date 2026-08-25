@@ -173,5 +173,11 @@ Git Reference serving as base for export. Only when action-mode is set to 'refer
 
 - [Additional fonts are available][2]
 
+## Development
+
+This action uses a pre-built Docker image hosted on GitHub Container Registry (ghcr.io) to provide fast execution without rebuilding the image on every run. The image is automatically built and pushed by the CI workflow when changes are pushed to the v2.x branch or when releases are created.
+
+**Note for contributors**: When modifying the Dockerfile, the changes will be built and tested after merging to the v2.x branch. PR tests use the latest stable image, so Dockerfile changes should be verified manually or after merge.
+
 [1]: https://github.com/rlespinasse/drawio-export
 [2]: https://github.com/rlespinasse/drawio-export#additional-fonts
