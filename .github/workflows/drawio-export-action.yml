@@ -17,13 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+
       # No Docker image needed here, the unit tests source 'src/lib.sh' directly
       - name: Install bats
-        run: make setup-test
+        run: just setup-test
         shell: bash
 
       - name: Testing src/lib.sh
-        run: make unit-test
+        run: just unit-test
         shell: bash
 
   os-testing-with-shallow-clone:
