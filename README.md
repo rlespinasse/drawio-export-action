@@ -173,5 +173,22 @@ Git Reference serving as base for export. Only when action-mode is set to 'refer
 
 - [Additional fonts are available][2]
 
+## Development
+
+This action is being migrated to use pre-built Docker images hosted on GitHub Container Registry (ghcr.io) to provide fast execution without rebuilding the image on every run.
+
+**Migration Status:**
+- ✅ Workflow updated to build and push images to GHCR
+- ⏳ action.yml still uses Dockerfile (will be updated after initial image publish)
+
+**Planned Docker Image Tags:**
+- `v2.x`: Will be updated on every push to the v2.x branch
+- `v2`, `v2.X`, `v2.X.Y`: Will be created on releases for version pinning
+- `pr-X`: Created for pull requests for verification
+
+**After Migration:** Once the initial image is published to GHCR, action.yml will be updated to reference `docker://ghcr.io/rlespinasse/drawio-export-action:v2.x`, eliminating the ~1 minute build time for users.
+
+**Note for maintainers**: Ensure the Docker image package on GHCR is set to public visibility so that users can pull the image when using the action.
+
 [1]: https://github.com/rlespinasse/drawio-export
 [2]: https://github.com/rlespinasse/drawio-export#additional-fonts
